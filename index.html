@@ -1,0 +1,229 @@
+<html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>To Do List</title>
+      <link rel="stylesheet" href="css/all.min.css" />
+      <link rel="shortcut icon" href="./images/favicon.png" type="image/x-icon">
+      <link rel="stylesheet" href="css/bootstrap.min.css" />
+      <link rel="stylesheet" href="css/style.css" />
+      <link rel="stylesheet" href="css/bootstrap-icons.css" />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Lobster&family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet"
+      />
+    </head>
+    <body>
+      <header class="position-fixed w-100">
+        <div class="container d-flex justify-content-between">
+          <h1 class="w-25 d-flex align-items-center p-1">
+            <a href="">Daily Task</a>
+          </h1>
+          <div class="input-group flex-nowrap mx-auto w-50 p-3">
+            <label
+              class="input-group-text"
+              id="addon-wrapping"
+              for="searchInput"
+              ><i class="bi bi-search-heart"></i
+            ></label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search Tasks...."
+              aria-label="search"
+              aria-describedby="addon-wrapping"
+              id="searchInput"
+              list="categories"
+            />
+            <datalist id="categories">
+              <option value="Education"></option>
+              <option value="Health"></option>
+              <option value="Finance"></option>
+              <option value="productivity"></option>
+            </datalist>
+          </div>
+        </div>
+      </header>
+      <div class="form-container d-none" id="model">
+        <div class="container">
+          <div class="form-floating">
+            <select
+              class="form-select mb-3"
+              id="status"
+              aria-label="Floating label select example"
+            >
+              <option value="nextUp" selected>Pin</option>
+              <option value="inProgress">Unpin</option>
+              <!-- <option value="done">Done</option> -->
+            </select>
+            <label for="status">Select Task Status</label>
+          </div>
+
+          <div class="form-floating mb-3">
+            <textarea
+              class="form-control"
+              id="title"
+              placeholder="Task Title"
+            ></textarea>
+            <label for="Title">Task Title</label>
+          </div>
+          <p class="alert alert-danger d-none" id="titleAlert">
+            Task Title must be at least 3 characters & not ending with a space
+          </p>
+          <!-- <div class="form-floating mb-3">
+            <textarea
+              class="form-control"
+              id="tagLine"
+              placeholder="Task Tagline"
+            ></textarea>
+            <label for="TagLine">TagLine</label>
+          </div>
+          <p class="alert alert-danger d-none" id="tagAlert">
+            Task Title must be at least 3 characters & Max 10 not ending with a space
+          </p> -->
+              <div class="form-floating">
+            <select
+              class="form-select mb-3"
+              id="category"
+              aria-label="Floating label select example"
+            >
+              <option value="education" selected>Education</option>
+              <option value="health">Health & Fitness</option>
+              <option value="finance">Finance</option>
+              <option value="productivity">Productivity</option>
+            </select>
+            <label for="category">Select Category</label>
+          </div>
+
+          <div class="form-floating mb-3">
+            <textarea
+              class="form-control"
+              id="description"
+              placeholder="Task Description"
+            ></textarea>
+            <label for="description">Task Description</label>
+          </div>
+
+          <p class="alert alert-danger d-none" id="descAlert">
+            Description must contain between 5 and 100 characters
+          </p>
+
+          <p class="text-end">
+            <span id="remainingCounter">100</span> remaining character
+          </p>
+
+          <button
+            class="btn btn-new-task w-100 fw-semibold mb-4 d-block"
+            id="addBtn"
+          >
+            Add Task
+          </button>
+          <button
+            class="text-center btn btn-update w-100 fw-semibold d-none"
+            id="updateBtn"
+          >
+            Update Task
+          </button>
+        </div>
+      </div>
+      <main>
+        <div class="main-container container">
+          <div class="container head-container d-flex justify-content-between">
+            <h2 class="d-flex align-items-center fw-bold">
+              <i class="bi bi-stars me-3"></i>
+              ALL OF TASKS
+            </h2>
+            <ul class="list-unstyled d-flex gap-3 m-0">
+              <ul o class="layout rounded-2 d-flex list-unstyled">
+                <li class="rounded-3">
+                  <i class="bi bi-grid-1x2 active" id="gridBtn"></i>
+                </li>
+                <li class="rounded-3">
+                  <i class="bi bi-list" id="barsBtn"></i>
+                </li>
+              </ul>
+              <li class="rounded-3 dark">
+                <i
+                  class="bi bi-moon-stars-fill"
+                  id="mode"
+                  data-mode="night"
+                ></i>
+              </li>
+            </ul>
+          </div>
+          <button
+            id="showModelBtn"
+            class="btn py-2 px-3 btn-new-task mx-auto d-flex align-items-center mb-5 fw-semibold"
+          >
+            <i class="bi bi-file-earmark-plus me-1 fs-5"></i> Add New Task
+          </button>
+<!-- pin note logic end -->
+          <div class="tasks-container columns pb-5">
+            <div class="row g-3 align-items-start">
+              <section class="to-do col-md-6 col-lg-4" id="nextUp">
+                <div class="content">
+                  <div
+                    class="header d-flex justify-content-between align-items-center py-2 px-3"
+                  >
+                    <h2 class="m-0 text-capitalize">Pin</h2>
+                    <!-- <span id="nextUpCountElm">0</span> -->
+                  </div>
+                  <div class="tasks p-3"></div>
+                </div>
+              </section>
+
+              <section class="in-progress col-md-6 col-lg-4" id="inProgress">
+                <div class="content">
+                  <div
+                    class="header d-flex justify-content-between align-items-center py-2 px-3"
+                  >
+                    <h2 class="m-0 text-capitalize">Unpin</h2>
+                    <!-- <span id="inProgressCount">0</span> -->
+                  </div>
+                  <div class="tasks p-3"></div>
+                </div>
+              </section>
+
+              <!-- <section class="done col-md-6 col-lg-4" id="done">
+                <div class="content">
+                  <div
+                    class="header d-flex justify-content-between align-items-center py-2 px-3"
+                  >
+                    <h2 class="m-0 text-capitalize">Done</h2>
+                     <span id="doneCount">0</span>
+                 </div>
+                  <div class="tasks p-3"></div>
+                </div>
+              </section>  -->
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="fixed-bottom">
+        <div class="container py-3 text-center">
+          
+          <p class="copyright m-0 fs-6 fw-bold">
+           
+            Made  with <i class="bi bi-heart-fill fa-beat"></i> By 
+
+            <a
+              href="https://www.linkedin.com/in/sourik-parui-842130201/"
+              class="text-decoration-none fw-normal d-inline-block "
+              target="_blank"
+              >SOURIK PARUI</a
+            >
+          
+          </p>
+        </div>
+      </footer>
+
+      <script src="js/code.jquery.com_jquery-3.7.0.min.js"></script>
+      <script src="js/main.js"></script>
+      <script src="js/bootstrap.bundle.min.js"></script>
+    </body>
+  </html>
+</html>
